@@ -32,7 +32,7 @@ include_directories(
     .
 )
 
-set(CLANG_VERSION 3.2 CACHE STRING "Clang version to use")
+set(CLANG_VERSION 3.4 CACHE STRING "Clang version to use")
 set(LLVM_TARGETS_TO_BUILD "X86" CACHE STRING "LLVM targets to build")
 
 if(NOT DEFINED BUILD_LIBCLANG)
@@ -130,14 +130,14 @@ if(BUILD_LIBCLANG)
     if(NOT EXISTS ${PROJECT_BINARY_DIR}/llvm)
         message("Extracting LLVM")
         execute_process(COMMAND ${CMAKE_COMMAND} -E tar xfz llvm.tar.gz WORKING_DIRECTORY ${PROJECT_BINARY_DIR})
-        execute_process(COMMAND ${CMAKE_COMMAND} -E rename llvm-${CLANG_VERSION}.src llvm WORKING_DIRECTORY ${PROJECT_BINARY_DIR})
+        execute_process(COMMAND ${CMAKE_COMMAND} -E rename llvm-${CLANG_VERSION} llvm WORKING_DIRECTORY ${PROJECT_BINARY_DIR})
 
         if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
             message(FATAL_ERROR "CMake can't extract clang.tar.gz due to http://public.kitware.com/Bug/view.php?id=13251\nPlease manually extract it and put it in llvm/tools/clang")
         else()
             message("Extracting Clang")
             execute_process(COMMAND ${CMAKE_COMMAND} -E tar xfz clang.tar.gz WORKING_DIRECTORY ${PROJECT_BINARY_DIR})
-            execute_process(COMMAND ${CMAKE_COMMAND} -E rename clang-${CLANG_VERSION}.src llvm/tools/clang WORKING_DIRECTORY ${PROJECT_BINARY_DIR})
+            execute_process(COMMAND ${CMAKE_COMMAND} -E rename clang-${CLANG_VERSION} llvm/tools/clang WORKING_DIRECTORY ${PROJECT_BINARY_DIR})
         endif()
     endif()
     if(MSVC)
